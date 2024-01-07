@@ -1,0 +1,90 @@
+.navbar {
+  background-color: #ece8e8;
+  background-size: cover;
+  background-position: center;
+  background-repeat: no-repeat;
+  padding-top: 3rem;
+}
+
+.Hero {
+  background-image: url("assets/img/background.jpeg");
+  background-size: cover;
+  background-position: center;
+  width: 100%;
+  height: 100vh;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.About {
+  background-image: url("assets/img/background.jpeg");
+  background-size: cover;
+  background-position: center;
+  width: 100%;
+  height: 100vh;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding-top: 1rem;
+}
+
+.Work {
+  background-image: url("assets/img/background.jpeg");
+  background-size: cover;
+  background-position: center;
+  width: 100%;
+  height: 100vh;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding-top: 1rem;
+  transition: 0.5s;
+}
+.pasien {
+  background-image: url("assets/img/background.jpeg");
+  background-size: cover;
+  background-position: center;
+  width: 100%;
+  height: 100vh;
+  align-items: center;
+  justify-content: center;
+}
+
+.tambah {
+  background-image: url("assets/img/background.jpeg");
+  background-size: cover;
+  background-position: center;
+  width: 100%;
+  height: 100vh;
+  align-items: center;
+  justify-content: center;
+}
+
+.daftar {
+  padding-top: 50px;
+}
+
+.pendaftar {
+  padding-top: 20px;
+}
+
+.detail {
+  padding-top: 5px;
+}
+
+.image:hover {
+  transform: scale(1.1);
+}
+
+.Footer {
+  position: fixed;
+  bottom: 0;
+  width: 100%;
+  /* Style lainnya yang dibutuhkan */
+  background-color: #ece8e8;
+}
+
+.App {
+  text-align: center;
+}
