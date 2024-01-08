@@ -37,14 +37,14 @@ const Pasien = () => {
   useEffect(() => {
     // Fetch data from API using Axios
     axios
-      .get("http://localhost:9080/api/pasiens")
+      .get("http://localhost:9080/api/pasien")
       .then((response) => {
-        setData(response.data); // Set the fetched data to the state
+        setData(response.data);
         setshowCreate(true);
         setShowTable(false);
       })
       .catch((error) => {
-        console.error("Error fetching data: ", error);
+        console.error("Terjadi kesalahan saat mengambil data: ", error);
       });
   }, []);
 
@@ -85,14 +85,14 @@ const Pasien = () => {
 
           // Ambil data terbaru setelah menambahkan data baru
           axios
-            .get("http://localhost:9080/api/pasiens")
+            .get("http://localhost:9080/api/pasien")
             .then((response) => {
               setData(response.data);
               setShowTable(true);
               setshowCreate(true);
             })
             .catch((error) => {
-              console.error("Error fetching data: ", error);
+              console.error("Terjadi kesalahan saat mengambil data: ", error);
             });
         })
         .catch((error) => {
@@ -135,6 +135,7 @@ const Pasien = () => {
     axios
       .put(`http://localhost:9080/api/pasien/${selectedId}`, updatedData)
       .then((response) => {
+        //menangani data respon dari db
         console.log("Respon dari server setelah pembaruan:", response.data);
         alert("Berhasil memperbarui pasien!");
 
@@ -206,14 +207,14 @@ const Pasien = () => {
   return (
     <>
       <Navigation />
-      {/* section keseluruhan */}
+      {/* section seluruh*/}
       <section id="pasien">
         <div className="pasien">
           {/* section home add */}
           <section id="tambah">
             <div className="tamabah">
               <div id="tambah" className={`tambah d-flex justify-content-center align-items-center ${showTambah ? "" : "d-none"}`}>
-                <div className="row text-center ">
+                <div className="row text-center text-white ">
                   <div className="col pt-2 ">
                     <h1>PENDAFTARAN ONLINE</h1>
                     <Button style={{ marginBottom: "10px" }} variant="primary" onClick={handleDaftarClick}>
@@ -281,6 +282,7 @@ const Pasien = () => {
                     onClick={() => {
                       setshowTambah(true);
                       setShowTable(false);
+                      setshowDetail(false);
                     }}
                   >
                     Back
@@ -324,8 +326,8 @@ const Pasien = () => {
                           <Form.Label as="legend" column sm={2}>
                             Jenis Kelamin
                           </Form.Label>
-                          <Form.Check type="radio" label="Laki-laki" name="jenisKelamin" value="laki-laki" checked={jenisKelamin === "laki-laki"} onChange={() => setJenisKelamin("laki-laki")} />
-                          <Form.Check type="radio" label="Perempuan" name="jenisKelamin" value="perempuan" checked={jenisKelamin === "perempuan"} onChange={() => setJenisKelamin("perempuan")} />
+                          <Form.Check type="radio" label="L" name="jenisKelamin" value="L" checked={jenisKelamin === "L"} onChange={() => setJenisKelamin("L")} />
+                          <Form.Check type="radio" label="P" name="jenisKelamin" value="P" checked={jenisKelamin === "P"} onChange={() => setJenisKelamin("P")} />
                           <Form.Group className="mb-2" controlId="alamat">
                             <Form.Label>Alamat</Form.Label>
                             <Form.Control type="text" value={alamat} onChange={(e) => setAlamat(e.target.value)} placeholder="Masukkan Alamat" />

@@ -18,12 +18,12 @@ func main() {
 
 func Routers() {
 	InitDB()
-	defer db.Close()
+	defer db.Close() //menutup koneksi 
 	log.Println("Starting the HTTP server on port 9080")
-	router := mux.NewRouter()
-	router.HandleFunc("/api/pasiens",
+	router := mux.NewRouter() //membuat router menggunakan package mux
+	router.HandleFunc("/api/pasien", //menetapkan rute dengan memanggil func getpasien dlaam method get
 		GetPasien).Methods("GET")
-	router.HandleFunc("/api/pasien",
+	router.HandleFunc("/api/pasien", 
 		CreatePasien).Methods("POST") 
 	router.HandleFunc("/api/pasien/{id}",
 		GetPasienid).Methods("GET") 
@@ -37,7 +37,7 @@ func Routers() {
 
 /***************************************************/
 
-//Get all users
+//Get all pasien
 func GetPasien(w http.ResponseWriter, r *http.Request) {
 	w.Header().Set("Content-Type", "application/json") //untuk memberitahu  bahwa respons yang dikirimkan akan berupa data JSON
 	var pasiens []Pasien
@@ -60,7 +60,7 @@ func GetPasien(w http.ResponseWriter, r *http.Request) {
 	json.NewEncoder(w).Encode(pasiens) //mengambil slice pasiens yang berisi query
 }
 
-//Create user
+//Create pasien
  func CreatePasien(w http.ResponseWriter, r *http.Request) {
 	w.Header().Set("Content-Type", "application/json")
 	stmt, err := db.Prepare("INSERT INTO pasien_puskesmas_sitinuraeni(nama," +
@@ -72,15 +72,14 @@ func GetPasien(w http.ResponseWriter, r *http.Request) {
 	if err != nil {
  		panic(err.Error())
 	}
- 	keyVal := make(map[string]string)
-	json.Unmarshal(body, &keyVal)
+ 	keyVal := make(map[string]string) //membuat peta yg akan menampung data
+	json.Unmarshal(body, &keyVal) //menguraikan json yang dimasukan kedalam keyval
 	nama := keyVal["nama"]
 	usia := keyVal["usia"]
 	jenis_kelamin := keyVal["jenis_kelamin"]
 	alamat := keyVal["alamat"]
 	deskripsi := keyVal["deskripsi"]
-	// print jenis_kelamin
-	fmt.Println(jenis_kelamin)
+	// fmt.Println(jenis_kelamin)
 	_, err = stmt.Exec(nama, usia, jenis_kelamin, alamat, deskripsi)//eksekusi pernyataan sql
 	if err != nil {
 		panic(err.Error())
@@ -109,7 +108,7 @@ func GetPasienid(w http.ResponseWriter, r *http.Request) {
 	json.NewEncoder(w).Encode(pasien) //mengubah data ke format JSON dan mengirimkannya kembali sebagai respons
 }
 
-	//Update user
+	//Update pasien
 	func UpdatePasien(w http.ResponseWriter, r *http.Request) {
 		w.Header().Set("Content-Type", "application/json")
 		params := mux.Vars(r) //mendapatkan parameter dari URL
@@ -119,7 +118,7 @@ func GetPasienid(w http.ResponseWriter, r *http.Request) {
 		if err != nil {
 			panic(err.Error())
 		}
-		body, err := ioutil.ReadAll(r.Body)
+		body, err := ioutil.ReadAll(r.Body) //membaca seluruh isi dari body
 		if err != nil {
 			panic(err.Error())
 		}
@@ -130,7 +129,7 @@ func GetPasienid(w http.ResponseWriter, r *http.Request) {
 		jenis_kelamin := keyVal["jenis_kelamin"]
 		alamat := keyVal["alamat"]
 		deskripsi := keyVal["deskripsi"]
-		_, err = stmt.Exec( nama, usia, jenis_kelamin, alamat, deskripsi, params["id"])
+		_, err = stmt.Exec( nama, usia, jenis_kelamin, alamat, deskripsi, params["id"]) //eksekusi sql
 		if err != nil {
 			panic(err.Error())
 		}
@@ -155,9 +154,9 @@ func DeletePasien(w http.ResponseWriter, r *http.Request) {
 }
 
 type Pasien struct {
-	ID        int `json:"id"`
+	ID        string `json:"id"`
 	Nama		   string `json:"nama"`
-	Usia      int `json:"usia"`
+	Usia      string `json:"usia"`
 	Jenis_Kelamin  string `json:"jenis_kelamin"`
 	Alamat    string `json:"alamat"`
 	Deskripsi	string `json:"deskripsi"`
@@ -183,6 +182,7 @@ type CORSRouterDecorator struct {
 	R *mux.Router
 }
 
+//func akses server yang berada di golang
 func (c *CORSRouterDecorator) ServeHTTP(rw http.ResponseWriter,
 	req *http.Request) {
 	if origin := req.Header.Get("Origin"); origin != "" {

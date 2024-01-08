@@ -8,8 +8,8 @@ const Service = () => {
   return (
     <>
       <Navigation />
-      <section id="Work">
-        <div className="Work text-center">
+      <section id="service">
+        <div className="service text-center text-white">
           <div className="Container">
             <div className="row text-center mb-5">
               <div className="col">
